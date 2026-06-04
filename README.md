@@ -6,6 +6,14 @@ IQC source code is not included in this repository or in the release
 installer. The installer contains compiled IQC extension modules, dependency
 wheels, verification scripts, and public examples.
 
+## License
+
+IQC binary releases are licensed under the PolyForm Noncommercial License 1.0.0.
+Commercial use requires a separate commercial license from the IQC authors.
+
+Third-party dependencies included in the offline wheelhouse remain governed by
+their respective licenses.
+
 ## Requirements
 
 - Linux x86_64

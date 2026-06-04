@@ -3,6 +3,9 @@
 This release provides a binary-only offline installer for Linux x86_64,
 CPython 3.12, CUDA 12 runtime wheels, and NVIDIA A100/A800 GPUs (`sm_80`).
 
+IQC binary releases are licensed under the PolyForm Noncommercial License 1.0.0.
+Commercial use requires a separate commercial license from the IQC authors.
+
 ## Assets
 
 - `iqc-linux-x64-cp312-cu12-sm80.tar.gz.part00`
