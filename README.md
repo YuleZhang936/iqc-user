@@ -31,7 +31,7 @@ Download the release bundle from the latest GitHub Release:
 
 ```bash
 curl -L -O https://raw.githubusercontent.com/YuleZhang936/iqc-user/main/download_iqc.sh
-bash download_iqc.sh v1.0.0
+bash download_iqc.sh v1.0.1
 ```
 
 The script downloads all release parts, verifies each part, joins them into
