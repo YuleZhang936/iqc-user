@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TAG="${1:-v2.0.0}"
+TAG="${1:-v2.1.0}"
 REPO="YuleZhang936/iqc-user"
 BASE_URL="${IQC_RELEASE_BASE_URL:-https://github.com/${REPO}/releases/download/${TAG}}"
 PACKAGE="iqc-linux-x64-cp312-cu12-sm80.tar.gz"

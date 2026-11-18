@@ -1,8 +1,8 @@
 # IQC User Distribution
 
 This repository provides the binary IQC user distribution. The offline package
-includes compiled IQC implementation modules, dependency wheels, public
-examples and installation checks.
+includes compiled IQC modules, dependency wheels, `.inp` calculation examples
+and installation checks.
 
 ## License
 
@@ -27,17 +27,15 @@ package index.
 
 ```bash
 curl -L --fail -O https://raw.githubusercontent.com/YuleZhang936/iqc-user/main/download_iqc.sh
-bash download_iqc.sh v2.0.0
-cd iqc-v2.0.0/iqc-linux-x64-cp312-cu12-sm80
+bash download_iqc.sh v2.1.0
+cd iqc-v2.1.0/iqc-linux-x64-cp312-cu12-sm80
 bash install.sh
-source .venv-iqc/bin/activate
-python verify.py
 ```
 
-The download script uses a directory for the selected version, reads the part
-list from the release manifest, verifies each part, joins the archive and
-verifies it before extraction. Downloads require internet access; installation
-from the downloaded package is offline.
+The download script verifies each archive part and the joined archive before
+extraction. Downloads require internet access; installation from the downloaded
+package is offline. The installer checks the GPU runtime and creates the `./iqc`
+launcher, which activates its environment automatically.
 
 If necessary, select Python explicitly:
 
@@ -45,21 +43,34 @@ If necessary, select Python explicitly:
 PYTHON=/path/to/python3.12 bash install.sh
 ```
 
-## Examples
+## Run a calculation
 
-After installation and activation:
+Edit an `.inp` file, check it, and run it:
 
 ```bash
-python examples/dft/rks.py
-python examples/tddft/rtd.py
-python examples/satddft/h2o.py
-python examples/satddft/thermal.py --output thermal-spectrum
-IQC_IXC_HE_STEPS=0 python examples/ixc/he.py
+./iqc --check examples/dft/rhf.inp
+./iqc examples/dft/rhf.inp
+./iqc examples/tddft/rtd.inp
+./iqc examples/satddft/h2o.inp
 ```
 
-The thermal example constructs a canonical spectrum from stationary SA-TDDFT
-states and transition dipoles. Temperature changes the state populations;
-it does not reoptimize orbitals.
+A calculation writes `<input-name>.out` and `<input-name>.json` in the current
+directory. The text report includes settings, SCF progress, energies and
+termination status. Use `--output water.out` to choose a report name or
+`--overwrite` to replace existing results.
+
+The package contains 17 input examples covering HF/DFT, density fitting, X2C,
+TDHF/TDA and spin-adapted response. Response examples use HF references.
+See `examples/README.md` and `examples/INPUT.md` in the installed package for
+the examples and complete input syntax. Input checks can run on a CPU/login
+node after installation; calculations require a CUDA GPU.
+
+To make `iqc` available directly in the current shell:
+
+```bash
+source .venv-iqc/bin/activate
+iqc examples/dft/rhf.inp
+```
 
 ## Manual download
 
@@ -76,14 +87,16 @@ tar -xf iqc-linux-x64-cp312-cu12-sm80.tar.gz
 On macOS, use `shasum -a 256 -c` for checksum verification. The package itself
 runs on the Linux target specified above.
 
-## Updating from v1.0.2
+## Updating
 
-Use a fresh virtual environment for v2.0.0. Read
-[the v2.0.0 release notes](RELEASE_NOTES_v2.0.0.md) for API changes and removed
-finite-temperature methods.
+Install v2.1.0 in a fresh directory and virtual environment. Read
+[the v2.1.0 release notes](RELEASE_NOTES_v2.1.0.md) for input-interface changes,
+response-property updates and removed thermal-spectrum APIs. Existing Python
+calculation APIs remain available for research workflows.
 
 ## Source visibility
 
 IQC implementation modules are compiled; package `__init__.py` files and
-runtime data remain in the wheel. Public example scripts are distributed as
-Python source. The package excludes internal research scripts and datasets.
+runtime data remain in the wheel. Public calculation examples contain `.inp`
+files and documentation. The package excludes internal research scripts and
+datasets.
